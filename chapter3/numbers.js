@@ -43,3 +43,37 @@ console.log(
     Math.log(512) / Math.LN2
 );
 console.log("Sześcian stałej e => Math.exp(3) ==>", Math.exp(3));
+console.log(
+    "Odpowiednik globalnej funkcji parseInt() => Number.parseInt() ==>",
+    Number.parseInt(2.0004)
+);
+console.log(
+    "Odpowiednik globalnej funkcji parseFloat() => Number.parseFloat() ==>",
+    Number.parseFloat(2)
+);
+console.log("Czy x ma wartość NaN? => Number.isNaN(2) ==>", Number.isNaN(2));
+console.log(
+    "Czy x jest liczbą skończoną? => Number.isFinite(2) ==>",
+    Number.isFinite(2)
+);
+console.log(
+    "Czy x jest liczbą całkowitą? => Number.isInteger(2) ==>",
+    Number.isInteger(2)
+);
+console.log(
+    "Czy x jest liczbą całkowitą? => Number.isInteger(2.1) ==>",
+    Number.isInteger(2.1)
+);
+console.log(
+    "Czy x jest liczbą całkowitą z zakresu -(2^53) < x < 2^53? => Number.isSafeInteger(2111232642626246) ==>",
+    Number.isSafeInteger(2111232642626246)
+);
+console.log(
+    "Minimalna liczba całkowita => -(2^53-1) ==>",
+    Number.MIN_SAFE_INTEGER
+);
+console.log(
+    "Maksymalna liczba całkowita => 2^53-1 ==>",
+    Number.MAX_SAFE_INTEGER
+);
+console.log("Najmniejsza różnica między liczbami => 2^-52 ==>", Number.EPSILON);
