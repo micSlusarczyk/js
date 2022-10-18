@@ -77,3 +77,4 @@ console.log(
     Number.MAX_SAFE_INTEGER
 );
 console.log("Najmniejsza różnica między liczbami => 2^-52 ==>", Number.EPSILON);
+console.log(Date());
