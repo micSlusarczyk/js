@@ -50,3 +50,68 @@ c.x = 1;
 c.y = 1; //W obiekcie c są definiowane dwie własne właściwości
 c.r = 2; //W obiekcie c jest nadpisywana odziedziczona właściwość
 unitcircle.r; // ==> 1 prototyp nie jest modyfikowany
+
+// Usuwanie właściwości
+
+delete book.author; //Obiekt book nie ma już właściwości author
+delete book["main title"]; // oraz "main title"
+
+let o3 = { x: 1 }; //Obiekt o3 ma własną właściwośc x i dziedziczy właściwość toString
+delete o3.x; // ==> true: usunięcie właściwości x
+delete o3.x; // ==> true: nic się nie dzieje
+delete o3.toString; // ==> true: nic się nie dzieje (właściwość toString jest odziedziczona)
+delete 1; // ==> true: nielogiczna operacja, ale operator zwraca true
+
+// W trybie ścisłym wszystkie poniższe instrukcje powodują zgłoszenie wyjątku TypeError a nie zwrócenie wartości false
+delete Object.prototype; // ==> false: właściwość jest niekonfigurowalna
+var x = 1; //Deklaracja zmiennej globalnej
+delete globalThis.x; // ==> false: nie można usunąć tej właściwości
+function f() {} //Deklaracja funkcji globalnej
+delete globalThis.f; // ==> false: tej właściwości nie można usunąć
+
+// Sprawdzanie właściwości
+
+let o4 = { x: 1 };
+"x" in o4; // ==> true: obiekt o4 ma własną właściwość o nazwie x
+"y" in o4; // ==> false: obiekt nie ma właściwości o nazwie y
+"toString" in o4; // ==> true: obiekt dziedziczy właściwość toString
+
+// Metoda hasOwnProperty()
+
+let o5 = { x: 1 };
+o.hasOwnProperty("x"); //true
+o.hasOwnProperty("y"); //false
+o.hasOwnProperty("toString"); // ==> false toString jest właściwością odziedziczoną
+
+// Metoda propertyIsEnumerable()
+
+let o6 = { x: 1 };
+o.propertyIsEnumerable("x"); // ==> true: obiekt ma wyliczalną wartość
+o.propertyIsEnumerable("y"); // ==> false
+Object.prototype.propertyIsEnumerable("toString"); // ==>false: właściwość nie jest wyliczalna
+
+// Wyliczanie właściwości
+
+let o7 = { x: 1, y: 2, z: 3 }; //Trzy własne wyliczalne właściwości
+o.propertyIsEnumerable("toString"); // ==> false: metoda niewyliczalna
+for (let p in o7) {
+    //Iterowanie właściwości
+    console.log(p); // Wyświetlenie właściwości x,y,z ale nie metody toString()
+}
+
+// Serializacja obiektów
+
+let o8 = { x: 1, y: { z: [false, null, ""] } }; //Definicja przykładowego obiektu
+let s = JSON.stringify(o8); // s=='{"x":1, "y":{"z":[false,null,""]}}'
+let p = JSON.parse(s); // ==> p == {x:1, y:{z: [false,null,""]}}
+
+// Metoda toString()
+let s1 = { x: 1, y: 2 }.toString(); //s=="[object Object]"
+let point2 = {
+    x: 1,
+    y: 2,
+    toString: function () {
+        return `(${this.x}, ${this.y})`;
+    },
+};
+String(point2) // ==>"(1,2)": metoda toString służąca do przekształcania ciągów znaków
