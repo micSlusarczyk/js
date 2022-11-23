@@ -41,7 +41,7 @@ let p3 = Object.create(o2); //Obiekt p3 dziedziczy właściwości po obiektach o
 p3.y = 2; //Od teraz ma również własną właściwość y
 let q = Object.create(p3); //Obiekt q dziedziczy właściwości po obiektach p3, o2 ...
 q.z = 3; //Ma również własną właściwość z
-let f = q.toString(); //Metoda toString() jest dziedziczona po obiekcie Object.prototype
+let f0 = q.toString(); //Metoda toString() jest dziedziczona po obiekcie Object.prototype
 q.x + q.y; // ==> 3 właściwości x i y są dziedziczone po obiektach o i p
 
 let unitcircle = { r: 1 }; //Obiekt po którym dziedziczone są właściwości
@@ -66,8 +66,8 @@ delete 1; // ==> true: nielogiczna operacja, ale operator zwraca true
 delete Object.prototype; // ==> false: właściwość jest niekonfigurowalna
 var x = 1; //Deklaracja zmiennej globalnej
 delete globalThis.x; // ==> false: nie można usunąć tej właściwości
-function f() {} //Deklaracja funkcji globalnej
-delete globalThis.f; // ==> false: tej właściwości nie można usunąć
+function f1() {} //Deklaracja funkcji globalnej
+delete globalThis.f1; // ==> false: tej właściwości nie można usunąć
 
 // Sprawdzanie właściwości
 
@@ -114,4 +114,20 @@ let point2 = {
         return `(${this.x}, ${this.y})`;
     },
 };
-String(point2) // ==>"(1,2)": metoda toString służąca do przekształcania ciągów znaków
+String(point2); // ==>"(1,2)": metoda toString służąca do przekształcania ciągów znaków
+
+// Metoda JSON
+
+let point3 = {
+    x: 1,
+    y: 2,
+    toString: function () {
+        return `(${this.x}, ${this.y})`;
+    },
+    toJSON: function () {
+        return this.toString();
+    },
+};
+JSON.stringify([point3]); // ==> '["(1,2)"]'
+
+
