@@ -60,3 +60,74 @@ function vertorMultiply({ x, y, z = 0, ...props }, scalar) {
     return { x: x * scalar, y: y * scalar, z: z * scalar, ...props };
 }
 vertorMultiply({ x: 1, y: 2, w: -1 }, 2); // ==> {x:2, y:4, z:0, w: -1}
+
+// Funkcja zwracająca sume właściwości iterowalnego obiektu a, wszytskie właściwości muszą być liczbami
+
+function sum(a) {
+    let total = 0;
+    for (let element of a) {
+        //Zgłoszenie wyjątku, jeżeli argument a nie jest iterowalny
+        if (typeof element !== "number") {
+            throw new TypeError("sum(): Właściowści muszą być liczbami ");
+        }
+        total += element;
+    }
+    return total;
+}
+
+sum([1, 2, 3]); // ==> 6
+sum(1, 2, 3); // ==> TypeError: liczba 1 nie jest iterowalna
+sum([1, 2, "3"]); // ==>TypeError: element o indeksie 2 nie jest liczbą
+
+function counter(n) {
+    // Argument n jest zmienną lokalną
+    return {
+        //Getter zwraca wartość lokalnej zmiennej licznikowej i powiększa ją
+        get count() {
+            return n++;
+        },
+        //Setter uniemożliwia pomniejszenie wartości zmiennej n
+        set count(m) {
+            if (m > n) n = m;
+            else
+                throw Error(
+                    "przypisywana wartość musi być większa od bieżącej"
+                );
+        },
+    };
+}
+
+let c = counter(1000);
+c.count; // ==>1000
+c.count; // ==> 1001
+c.count = 2000;
+c.count; // ==>2000
+c.count = 2000; // ==> Error: przypisywana wartość musi być większa od bieżącej
+
+// Funkcja dodaje do obiektu metody odczytujące i zapisujące
+function addPrivateProperty(o, name, predicate) {
+    let value; // To jest wartość właściwości
+
+    // Getter po prostu zwraca wartość właściwości
+    o[`get${name}`] = function () {
+        return value;
+    };
+
+    // Setter zapisuje wartość lub zgłasza wyjątek jeżeli funkcja predykatu odrzuci wartość
+    o[`set${name}`] = function (v) {
+        if (predicate && !predicate(v)) {
+            throw new TypeError(`set${name}: nieprawidłowa wartość - ${v}`);
+        } else {
+            value = v;
+        }
+    };
+}
+
+// Poniższy kod demonstruje użycie funkcji addPrivateProperty()
+let o1 = {}; //Pusty obiekt
+// Dodanie metod dostępowych getName() i setName()
+// Dopuszczalne są tylko ciągi znaków
+addPrivateProperty(o1, "Name", (x) => typeof x === "string");
+o1.setName("Jan"); //Przypisanie wartości zmiennej
+o1.getName(); // => "Jan"
+o1.setName(0); // ==> TypeError: setName: niepoprawna wartość - 0
