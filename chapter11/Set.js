@@ -43,8 +43,9 @@ sum; // => 17: 2+3+5+7
 [...oneDigitPrimes]; // => [2,3,5,7]
 Math.max(...oneDigitPrimes); // 7
 
-
 // Metoda forEach()
-let product =1;
-oneDigitPrimes.forEach(n=>{product *=n});
+let product = 1;
+oneDigitPrimes.forEach((n) => {
+    product *= n;
+});
 product; // => 210: 2 * 3 * 5 * 7
