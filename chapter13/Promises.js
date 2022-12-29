@@ -108,6 +108,7 @@ function wait(duration) {
 
 //Asynchroniczna wersja funkcji getJSON()
 const http = require("http");
+const { url } = require("inspector");
 const { resolve } = require("path");
 function getJSON(url) {
     //Utworzenie i zwrócenie nowej promesy
@@ -149,4 +150,28 @@ function getJSON(url) {
             reject(error);
         });
     });
+}
+
+function fetchSequentially(urls) {
+    //Odbierane odpowiedzi będą zapisane w tej zmiennej
+    const bodies = [];
+    //Funckja pobierająca treść jednej strony i zwracająca promesę
+    function fetchOne(url) {
+        return fetch(url)
+            .then((response) => response.text())
+            .then((body) => {
+                //Zapisujemy odpowiedź w tablicy i świadomie pomijamy instrukcję return
+                //(funkcja zwróci wartość undefined)
+                bodies.push(body);
+            });
+    }
+    //Uruchomienie promesy, która zostanie natychmiast spełniona z wartością indefined
+    let p = Promise.resolve(undefined);
+
+    //Przetworzenie w pętli adresów URL i utworzenie łańcucha promes o odpowiedniej długości
+    //Każda promesa obsługuje jedno zapytanie
+    for (url of urls) {
+        p = p.then(() => fetchOne(url));
+    }
+    return p.then(() => bodies);
 }
