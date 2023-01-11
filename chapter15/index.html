@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Cyfrowy zegar</title>
+        <style>
+            .clock {
+                font: 24px sans-serif;
+                background-color: #ddf;
+                padding: 15px;
+                border: 1px solid black;
+                border-radius: 10px;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Cyfrowy zegar</h1>
+        <span class="clock"></span>
+        <button class="mybutton">Click ME!!!</button>
+        <script>
+            //Definicja funkcji wyświetlający bieżący czas
+            function displayTime() {
+                let clock = document.querySelector(".clock"); //Uzyskanie referencji do elementu .clock
+                let now = new Date(); //Odczytanie bieżącego czasu
+                clock.textContent = now.toLocaleTimeString(); //Wyświltenie czasu
+            }
+            displayTime(); //Wyświetlenie czasu
+            setInterval(displayTime, 1000); //a następnie aktualizowanie go co sekundę
+
+            //Obsługa buttona
+            let b = document.querySelector(".mybutton");
+            b.onclick = function () {
+                console.log("Dzięki za kliknięcie!");
+            };
+            b.addEventListener("click", () => {
+                console.log("Dzięki jeszcze raz!");
+            });
+        </script>
+    </body>
+</html>
