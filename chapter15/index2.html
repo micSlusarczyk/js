@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="./style.css" />
+        <title>Simple Game</title>
+    </head>
+    <body>
+        <h1 class="heading">Zgadnij liczbę, którą mam na myśli...</h1>
+        <!-- Wizualne przedstawienie liczb, które nie zostały wykluczone -->
+        <div class="container">
+            <div class="range"></div>
+        </div>
+        <!-- Pole w którym użytkownik wpisuje odgadywane liczby -->
+        <input type="text" class="input" />
+        <!-- Przycisk rozpocznający nową grę. Ukryty, dopóki trwa gra. -->
+        <button class="playagain" hidden onclick="location.search='';">
+            Nowa Gra
+        </button>
+        <script src="./game.js"></script>
+    </body>
+</html>

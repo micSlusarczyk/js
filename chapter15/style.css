@@ -1,0 +1,40 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    height: 250px;
+    justify-content: space-evenly;
+}
+.heading {
+    font: 36px bold sans-serif;
+    margin: 0;
+}
+.container {
+    border: 1px solid black;
+    height: 1rem;
+    width: 80%;
+}
+.range {
+    background-color: green;
+    height: 1rem;
+    margin-left: 0%;
+    width: 100%;
+}
+
+.input {
+    display: block;
+    font-size: 24px;
+    padding: 5px;
+    width: 60%;
+}
+.playagain {
+    border-radius: 5px;
+    font-size: 24px;
+    padding: 10px;
+}
