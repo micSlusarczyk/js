@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <style>
+        * {
+            box-sizing: border-box;
+            padding: 20px;
+        }
+    </style>
+    <body>
+        <input
+            type="text"
+            class="input"
+            style="width: 100%; padding: 10px; border: 2px solid black;"
+        />
+        <script>
+            // Zdefiniowanie kilku elementów interfejsu graficznego
+            let nick = prompt("Podaj swój nick"); //Uzyskanie nicku uzytkownika
+            let input = document.querySelector(".input"); //Wyszukanie pola tekstowego
+            input.focus(); //ustawienie fokusu
+
+            //Rejestracja przy użyciu obiektu EventSource procedury powiadamiającej i nowych komunikatach
+            let chat = new EventSource("/chat");
+            chat.addEventListener("chat", (event) => {
+                //Gdy nadejdzie komunikat
+                let div = document.createElement("div"); //tworzymy diva
+                div.append(event.data); //umieszczamy w nim tekst kommunikatu
+                input.before(div); //i znacznik div przed polem
+                input.scrollIntoView(); //Przeiwnięcie strony aby pole było widoczne
+            });
+
+            //Wysłanie komunikatu do serwera za pomocą funkcji fetch()
+            input.addEventListener("change", () => {
+                //Gdy uzytkownik naciśnie ENTER
+                fetch("/chat", {
+                    //zaczynamy wysyłać zapytanie HTTP na zadany adres URL
+                    method: "POST", //Jets to zapytanie POST
+                    body: nick + ": " + input.value, //Zawierajace nick i komunikat
+                }).catch((e) => console.error); //Odpowiedzi pomijamy ale rejestrujemy błędy
+                input.value = ""; //Usuwamy zawartość pola
+            });
+        </script>
+    </body>
+</html>

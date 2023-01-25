@@ -131,7 +131,7 @@ document.querySelector(".input").onchange = (event) => {
     gamestate.render();
 };
 
-window.onpopstate = (event) =>{
+window.onpopstate = (event) => {
     gamestate = GameState.fromStateObject(event.state);
     gamestate.render();
-}
+};
