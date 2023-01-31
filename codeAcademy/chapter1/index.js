@@ -121,3 +121,17 @@ if (runnerAge >= 18 && earlyRegister) {
 } else if (runnerAge < 18) {
     console.log(`The race start at 12:30 pm. Yor number is ${raceNumber}`);
 }
+
+//Nested loops
+// Write your code below
+const bobsFollowers = ["John", "James", "David", "Robert"];
+const tinasFollowers = ["John", "James", "Cindy"];
+let mutualFollowers = [];
+for (let i = 0; i < bobsFollowers.length; i++) {
+    for (let j = 0; j < tinasFollowers.length; j++) {
+        if (bobsFollowers[i] === tinasFollowers[j]) {
+            mutualFollowers.push(tinasFollowers[j]);
+        }
+    }
+}
+console.log(mutualFollowers);
