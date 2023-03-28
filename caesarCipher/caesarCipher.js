@@ -1,4 +1,4 @@
-const encrypt = (phrase, num) => {
+const encrypt = (phrase) => {
     const alphabet = "abcdefghijklmnopqrstuvwxyz".split("");
     let newPhrase = phrase.toLowerCase();
     let encryptedText = "";
@@ -10,7 +10,7 @@ const encrypt = (phrase, num) => {
             continue;
         }
         let index = alphabet.indexOf(currentLetter);
-        let newIndex = index + num;
+        let newIndex = index + 13;
         if (newIndex > 25) newIndex -= 26;
         if (newIndex < 0) newIndex += 26;
         if (phrase[i] === phrase[i].toUpperCase()) {
@@ -21,4 +21,12 @@ const encrypt = (phrase, num) => {
     }
     return encryptedText;
 };
-console.log(encrypt("TEST", 13));
+const handleClick = () => {
+    const input = document.getElementById("input-phrase").value;
+    const output = encrypt(input);
+    document.getElementById("output-phrase").textContent = output;
+};
+
+document
+    .getElementById("encrypt-button")
+    .addEventListener("click", handleClick);
